@@ -13,6 +13,11 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
         body {
             font-family: "Geist", sans-serif;
@@ -86,6 +91,67 @@
 
 
 
+        <!-- ISSUE GRID -->
+        <div id="issues-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <!-- SINGLE CARD TEMPLATE -->
+            <div class="card bg-white shadow-sm border border-gray-200">
+
+                <div class="card-body p-5">
+
+                    <!-- top row -->
+                    <div class="flex justify-between items-center mb-2">
+
+                        <img src="./assets/Open-Status.png" alt="">
+
+                        <span class="text-xs bg-red-100 text-red-600 px-6 py-1 rounded-[100px]">
+                            HIGH
+                        </span>
+
+                    </div>
+
+                    <!-- title -->
+                    <h3 class="font-semibold text-sm leading-tight">
+                        Fix Navigation Menu On Mobile Devices
+                    </h3>
+
+                    <!-- description -->
+                    <p class="text-xs text-gray-500 mt-2">
+                        The navigation menu doesn't collapse properly on mobile devices.
+                    </p>
+
+                    <!-- tags -->
+                    <div class="flex gap-3 mt-3 flex-wrap">
+
+                        <!-- Bug Tag -->
+                        <span
+                            class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-600 text-xs font-bold">
+                            <img src="./assets/BugDroid.png" alt="" class="w-4 h-4">
+                            BUG
+                        </span>
+
+                        <!-- Help Wanted Tag -->
+                        <span
+                            class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-600 text-xs font-bold">
+                            <i class="fa-solid fa-life-ring"></i>
+                            HELP WANTED
+                        </span>
+
+                    </div>
+
+
+                    <!-- footer -->
+                    <div class=" text-gray-400 mt-4">
+                        <span>#1
+                            by john_doe</span><br>
+                        1/15/2024
+                    </div>
+
+                </div>
+            </div>
+            <!-- END CARD -->
+
+        </div>
 
     </div>
 
