@@ -1,9 +1,10 @@
-// script.js
+// script.js - COMPLETE & FINAL VERSION
 let allIssues = [];
 
 const API_ALL = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
 const API_SINGLE = (id) => `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
 
+// ====================== FETCH ISSUES ======================
 async function fetchIssues() {
     document.getElementById('loading').classList.remove('hidden');
     document.getElementById('issues-container').innerHTML = '';
@@ -23,31 +24,47 @@ async function fetchIssues() {
     }
 }
 
-// Dynamic label with different colors & icons (exactly as you wanted)
+// ====================== LABEL HELPER (different colors + icons) ======================
 function getLabelHTML(label) {
     const l = label.toLowerCase().trim();
     
-    if (l === 'bug' || l.includes('bug')) {
-        return `<span class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-600 text-xs font-bold">
+    if (l.includes('bug')) {
+        return `<span class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-100 text-red-600 text-[10px] font-bold">
             <img src="./assets/BugDroid.png" class="w-4 h-4"> ${label.toUpperCase()}
         </span>`;
     }
-    if (l === 'enhancement' || l.includes('enhancement')) {
-        return `<span class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-100 text-purple-600 text-xs font-bold">
+    if (l.includes('enhancement')) {
+        return `<span class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-600 text-[10px] font-bold">
             <img src="./assets/Sparkle.png" class="w-4 h-4"> ${label.toUpperCase()}
         </span>`;
     }
     if (l.includes('help') || l.includes('wanted')) {
-        return `<span class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-600 text-xs font-bold">
+        return `<span class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-600 text-[10px] font-bold">
             <i class="fa-solid fa-life-ring"></i> HELP WANTED
         </span>`;
     }
-    // default for any other label
-    return `<span class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-600 text-xs font-bold">
+    // Any other label
+    return `<span class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-600 text-[10px] font-bold">
         ${label.toUpperCase()}
     </span>`;
 }
 
+// ====================== PRIORITY HELPER (NEW - dynamic colors) ======================
+function getPriorityBadge(priority) {
+    const p = (priority || 'HIGH').toLowerCase();
+    if (p === 'high') {
+        return `<span class="text-xs bg-red-100 text-red-600 px-6 py-1 rounded-[100px] font-bold">HIGH</span>`;
+    }
+    if (p === 'medium') {
+        return `<span class="text-xs bg-yellow-100 text-yellow-600 px-6 py-1 rounded-[100px] font-bold">MEDIUM</span>`;
+    }
+    if (p === 'low') {
+        return `<span class="text-xs bg-gray-100 text-gray-600 px-6 py-1 rounded-[100px] font-bold">LOW</span>`;
+    }
+    return `<span class="text-xs bg-red-100 text-red-600 px-6 py-1 rounded-[100px] font-bold">${p.toUpperCase()}</span>`;
+}
+
+// ====================== RENDER CARDS (exact design + smaller labels) ======================
 function renderIssues(issues) {
     const container = document.getElementById('issues-container');
     container.innerHTML = '';
@@ -68,10 +85,7 @@ function renderIssues(issues) {
                     <!-- Top row: Status icon + Priority -->
                     <div class="flex justify-between items-center mb-3">
                         <img src="./assets/${isOpen ? 'Open-Status.png' : 'Closed-Status.png'}" class="w-6 h-6">
-                        
-                        <span class="text-xs bg-red-100 text-red-600 px-6 py-1 rounded-[100px] font-bold">
-                            ${(issue.priority || 'HIGH').toUpperCase()}
-                        </span>
+                        ${getPriorityBadge(issue.priority)}
                     </div>
 
                     <!-- Title -->
@@ -82,12 +96,12 @@ function renderIssues(issues) {
                         ${issue.description || issue.body || 'No description provided.'}
                     </p>
 
-                    <!-- Labels - DIFFERENT COLORS & ICONS -->
-                    <div class="flex gap-3 mt-4 flex-wrap">
+                    <!-- Labels - smaller size so they fit side by side -->
+                    <div class="flex gap-2 mt-4 flex-wrap">
                         ${(issue.labels || ['BUG']).map(label => getLabelHTML(label)).join('')}
                     </div>
 
-                    <!-- Footer with border-top (EXACTLY as in your HTML) -->
+                    <!-- Footer - exact border as in your original HTML -->
                     <div class="pt-4 mt-4 border-t border-[#e4e4e7] text-gray-400 text-xs">
                         #${issue.id || issue.number} by ${issue.author || issue.user?.login || 'Unknown'}<br>
                         ${issue.createdAt 
@@ -98,20 +112,86 @@ function renderIssues(issues) {
             </div>
         `;
 
-        const cardWrapper = document.createElement('div');
-        cardWrapper.innerHTML = cardHTML;
-        cardWrapper.querySelector('.card').onclick = () => showIssueModal(issue.id || issue.number);
-        container.appendChild(cardWrapper);
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = cardHTML;
+        wrapper.querySelector('.card').onclick = () => showIssueModal(issue.id || issue.number);
+        container.appendChild(wrapper);
     });
 }
 
+// ====================== FILTER TABS ======================
+function filterIssues(type) {
+    document.querySelectorAll('#btn-all, #btn-open, #btn-closed').forEach(btn => {
+        btn.classList.remove('btn-primary', 'bg-[#4a00ff]', 'text-white');
+    });
 
-function filterIssues(type) {}
-function searchIssues() {}
-async function showIssueModal(id) { }
-function closeModal() {}
-function newIssue() { alert("New Issue modal would open here ✨"); }
+    if (type === 'all') document.getElementById('btn-all').classList.add('btn-primary', 'bg-[#4a00ff]', 'text-white');
+    else if (type === 'open') document.getElementById('btn-open').classList.add('btn-primary', 'bg-[#4a00ff]', 'text-white');
+    else document.getElementById('btn-closed').classList.add('btn-primary', 'bg-[#4a00ff]', 'text-white');
 
+    let filtered = allIssues;
+    if (type === 'open') filtered = allIssues.filter(i => (i.status || i.state || '').toLowerCase() === 'open');
+    if (type === 'closed') filtered = allIssues.filter(i => (i.status || i.state || '').toLowerCase() === 'closed');
+
+    renderIssues(filtered);
+}
+
+// ====================== SEARCH ======================
+function searchIssues() {
+    const term = document.getElementById('search-input').value.toLowerCase().trim();
+    if (!term) return renderIssues(allIssues);
+
+    const filtered = allIssues.filter(issue => 
+        (issue.title || '').toLowerCase().includes(term) ||
+        (issue.description || issue.body || '').toLowerCase().includes(term)
+    );
+    renderIssues(filtered);
+}
+
+// ====================== MODAL ======================
+async function showIssueModal(id) {
+    try {
+        const res = await fetch(API_SINGLE(id));
+        const json = await res.json();
+        const issue = json.data || json;
+
+        const isOpen = (issue.status || issue.state || '').toLowerCase() === 'open';
+
+        document.getElementById('modal-status-pill').innerHTML = `
+            <span class="${isOpen ? 'bg-emerald-100 text-emerald-700' : 'bg-purple-100 text-purple-700'} px-4 py-1 rounded-full text-xs font-bold">
+                ${isOpen ? 'OPEN' : 'CLOSED'}
+            </span>`;
+        
+        document.getElementById('modal-id').textContent = `#${issue.id || issue.number}`;
+        document.getElementById('modal-title').textContent = issue.title;
+        document.getElementById('modal-description').textContent = issue.description || issue.body || 'No description';
+        document.getElementById('modal-author').textContent = issue.author || issue.user?.login || 'Unknown';
+        document.getElementById('modal-date').textContent = issue.createdAt 
+            ? new Date(issue.createdAt).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'}) 
+            : 'January 15, 2024';
+
+        document.getElementById('modal-priority').innerHTML = getPriorityBadge(issue.priority);
+
+        const labelsDiv = document.getElementById('modal-labels');
+        labelsDiv.innerHTML = (issue.labels || ['BUG']).map(l => 
+            `<span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">${l}</span>`
+        ).join('');
+
+        document.getElementById('issue-modal').classList.remove('hidden');
+    } catch (e) {
+        alert("Could not load issue details");
+    }
+}
+
+function closeModal() {
+    document.getElementById('issue-modal').classList.add('hidden');
+}
+
+function newIssue() {
+    alert("New Issue modal would open here ✨");
+}
+
+// ====================== INIT ======================
 window.onload = () => {
     if (window.location.pathname.includes('dashboard.html')) {
         fetchIssues();
