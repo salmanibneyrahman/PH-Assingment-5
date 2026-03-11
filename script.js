@@ -12,7 +12,7 @@ async function fetchIssues() {
         const res = await fetch(API_ALL);
         const json = await res.json();
         allIssues = json.data || json || [];
-        
+
         document.getElementById('total-issues').textContent = `${allIssues.length} Issues`;
         renderIssues(allIssues);
     } catch (e) {
@@ -25,7 +25,7 @@ async function fetchIssues() {
 
 // ====================== STATUS ICON ======================
 function getStatusIcon(isOpen) {
-    return isOpen 
+    return isOpen
         ? `<img src="./assets/Open-Status.png" class="w-6 h-6">`
         : `<img src="./assets/Closed-Status.png" class="w-6 h-6">`;
 }
@@ -33,7 +33,7 @@ function getStatusIcon(isOpen) {
 // ====================== LABELS ======================
 function getLabelHTML(label) {
     const l = label.toLowerCase().trim();
-    
+
     if (l.includes('bug')) {
         return `<span class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-100 text-red-600 text-[9px] font-bold">
             <img src="./assets/BugDroid.png" class="w-3.5 h-3.5"> ${label.toUpperCase()}
@@ -49,14 +49,14 @@ function getLabelHTML(label) {
             <i class="fa-solid fa-life-ring"></i> HELP WANTED
         </span>`;
     }
-    
+
     // DOCUMENTATION and GOOD FIRST ISSUE
     if (l.includes('documentation') || l.includes('good first issue')) {
         return `<span class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-100 text-blue-600 text-[9px] font-bold">
             <i class="fa-solid fa-file"></i> ${label.toUpperCase()}
         </span>`;
     }
-    
+
     // default
     return `<span class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-100 text-blue-600 text-[9px] font-bold">
         ${label.toUpperCase()}
@@ -101,9 +101,9 @@ function renderIssues(issues) {
                     </div>
                     <div class="pt-4 mt-4 border-t border-[#e4e4e7] text-gray-400 text-xs">
                         #${issue.id || issue.number} by ${issue.author || issue.user?.login || 'Unknown'}<br>
-                        ${issue.createdAt 
-                            ? new Date(issue.createdAt).toLocaleDateString('en-US', {month:'numeric', day:'numeric', year:'numeric'}) 
-                            : '1/15/2024'}
+                        ${issue.createdAt
+                ? new Date(issue.createdAt).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' })
+                : '1/15/2024'}
                     </div>
                 </div>
             </div>
@@ -141,7 +141,7 @@ function searchIssues() {
     const term = document.getElementById('search-input').value.toLowerCase().trim();
     if (!term) return renderIssues(allIssues);
 
-    const filtered = allIssues.filter(issue => 
+    const filtered = allIssues.filter(issue =>
         (issue.title || '').toLowerCase().includes(term) ||
         (issue.description || issue.body || '').toLowerCase().includes(term)
     );
@@ -161,23 +161,23 @@ async function showIssueModal(id) {
         document.getElementById('modal-title').textContent = issue.title;
 
         const pill = document.getElementById('modal-status-pill');
-        pill.innerHTML = isOpen 
+        pill.innerHTML = isOpen
             ? `<span class="bg-green-500 text-white px-5 py-1 rounded-full text-xs font-semibold">Opened</span>`
             : `<span class="bg-purple-500 text-white px-5 py-1 rounded-full text-xs font-semibold">Closed</span>`;
-        
+
         const date = issue.createdAt ? new Date(issue.createdAt) : new Date();
-        const formattedDate = `${date.getDate().toString().padStart(2,'0')}/${(date.getMonth()+1).toString().padStart(2,'0')}/${date.getFullYear()}`;
-        
-        document.getElementById('modal-opened-by').innerHTML = 
+        const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+
+        document.getElementById('modal-opened-by').innerHTML =
             `Opened by ${issue.author || issue.user?.login || 'Unknown'} • ${formattedDate}`;
 
         const labelsDiv = document.getElementById('modal-labels');
         labelsDiv.innerHTML = (issue.labels || ['BUG']).map(label => getLabelHTML(label)).join('');
 
-        document.getElementById('modal-description').textContent = 
+        document.getElementById('modal-description').textContent =
             issue.description || issue.body || 'No description provided.';
 
-        document.getElementById('modal-assignee').textContent = 
+        document.getElementById('modal-assignee').textContent =
             issue.author || issue.user?.login || 'Unknown';
 
         document.getElementById('modal-priority').innerHTML = getPriorityBadge(issue.priority);
