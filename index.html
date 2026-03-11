@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,16 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
 
     <style>
-        * {
-            font-family: "Geist", sans-serif;
-        }
-
-        body {
-            background: #f8fafc;
-        }
+        * { font-family: "Geist", sans-serif; }
+        body { background: #f8fafc; }
     </style>
 </head>
-
 <body>
 
     <div class="min-h-screen flex items-center justify-center">
@@ -38,22 +31,22 @@
                 <!-- Username -->
                 <div class="text-left mb-4">
                     <label class="text-gray-700 font-bold">Username</label>
-                    <input id="username" type="text" placeholder="Enter Username"
-                        class="input input-bordered w-full mt-1" />
+                    <input id="username" type="text" placeholder="Enter Username" 
+                           class="input input-bordered w-full mt-1" />
                     <p class="text-[#4a00ff] text-sm mt-1">Default: admin</p>
                 </div>
 
                 <!-- Password -->
                 <div class="text-left mb-6">
                     <label class="text-gray-700 font-bold">Password</label>
-                    <input id="password" type="password" placeholder="Enter Password"
-                        class="input input-bordered w-full mt-1" />
+                    <input id="password" type="password" placeholder="Enter Password" 
+                           class="input input-bordered w-full mt-1" />
                     <p class="text-[#4a00ff] text-sm mt-1">Default: admin123</p>
                 </div>
 
                 <!-- Sign In Button (FIXED) -->
-                <button onclick="handleLogin()"
-                    class="btn w-full text-white border-0 bg-[#4a00ff] hover:opacity-90 text-lg">
+                <button onclick="handleLogin()" 
+                        class="btn w-full text-white border-0 bg-[#4a00ff] hover:opacity-90 text-lg">
                     Sign In
                 </button>
 
@@ -86,5 +79,4 @@
         }
     </script>
 </body>
-
 </html>
