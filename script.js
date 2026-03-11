@@ -33,22 +33,32 @@ function getStatusIcon(isOpen) {
 // ====================== LABELS ======================
 function getLabelHTML(label) {
     const l = label.toLowerCase().trim();
+    
     if (l.includes('bug')) {
-        return `<span class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-100 text-red-600 text-[10px] font-bold">
-            <img src="./assets/BugDroid.png" class="w-4 h-4"> ${label.toUpperCase()}
+        return `<span class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-100 text-red-600 text-[9px] font-bold">
+            <img src="./assets/BugDroid.png" class="w-3.5 h-3.5"> ${label.toUpperCase()}
         </span>`;
     }
     if (l.includes('enhancement')) {
-        return `<span class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-600 text-[10px] font-bold">
-            <img src="./assets/Sparkle.png" class="w-4 h-4"> ${label.toUpperCase()}
+        return `<span class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-purple-100 text-purple-600 text-[9px] font-bold">
+            <img src="./assets/Sparkle.png" class="w-3.5 h-3.5"> ${label.toUpperCase()}
         </span>`;
     }
     if (l.includes('help') || l.includes('wanted')) {
-        return `<span class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-yellow-100 text-yellow-600 text-[10px] font-bold">
+        return `<span class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-600 text-[9px] font-bold">
             <i class="fa-solid fa-life-ring"></i> HELP WANTED
         </span>`;
     }
-    return `<span class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-600 text-[10px] font-bold">
+    
+    // DOCUMENTATION and GOOD FIRST ISSUE
+    if (l.includes('documentation') || l.includes('good first issue')) {
+        return `<span class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-100 text-blue-600 text-[9px] font-bold">
+            <i class="fa-solid fa-file"></i> ${label.toUpperCase()}
+        </span>`;
+    }
+    
+    // default
+    return `<span class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-100 text-blue-600 text-[9px] font-bold">
         ${label.toUpperCase()}
     </span>`;
 }
