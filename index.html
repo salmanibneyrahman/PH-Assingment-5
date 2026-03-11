@@ -1,27 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitHub Issue Tracker</title>
 
-    <!-- Tailwind + DaisyUI -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
-    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
 
     <style>
-        body {
-            font-family: "Geist", sans-serif;
-            background: #f8fafc;
-        }
+        * { font-family: "Geist", sans-serif; }
+        body { background: #f8fafc; }
     </style>
-
 </head>
-
 <body>
 
     <div class="min-h-screen flex items-center justify-center">
@@ -39,28 +31,23 @@
                 <!-- Username -->
                 <div class="text-left mb-4">
                     <label class="text-gray-700 font-bold">Username</label>
-
-                    <input type="text" placeholder="Enter Username" class="input input-bordered w-full mt-1" />
-
+                    <input id="username" type="text" placeholder="Enter Username" 
+                           class="input input-bordered w-full mt-1" />
                     <p class="text-[#4a00ff] text-sm mt-1">Default: admin</p>
                 </div>
 
                 <!-- Password -->
                 <div class="text-left mb-6">
                     <label class="text-gray-700 font-bold">Password</label>
-
-                    <input type="password" placeholder="Enter Password" class="input input-bordered w-full mt-1" />
-
+                    <input id="password" type="password" placeholder="Enter Password" 
+                           class="input input-bordered w-full mt-1" />
                     <p class="text-[#4a00ff] text-sm mt-1">Default: admin123</p>
                 </div>
 
-                <!-- Button -->
-                <button class="btn w-full text-white border-0
-bg-[#4a00ff]
-hover:opacity-90 text-lg">
-
+                <!-- Sign In Button (FIXED) -->
+                <button onclick="handleLogin()" 
+                        class="btn w-full text-white border-0 bg-[#4a00ff] hover:opacity-90 text-lg">
                     Sign In
-
                 </button>
 
                 <!-- Divider -->
@@ -70,28 +57,26 @@ hover:opacity-90 text-lg">
                     <hr class="flex-1 border-gray-300">
                 </div>
 
-                <!-- Demo Credentials -->
-
-                <p class="font-semibold text-[#64748b]">
-                    Demo Credentials:
-                </p>
-
-                <div class="bg-[#f8fafc] rounded-lg p-4">
-
-                    <p class="text-gray-600 text-sm mt-1">
-                        <b class="text-black">Username:</b> admin
-                    </p>
-
-                    <p class="text-gray-600 text-sm">
-                        <b class="text-black">Password:</b> admin123
-                    </p>
-
+                <p class="font-semibold text-[#64748b]">Demo Credentials:</p>
+                <div class="bg-[#f8fafc] rounded-lg p-4 text-left text-sm">
+                    <p><b>Username:</b> admin</p>
+                    <p><b>Password:</b> admin123</p>
                 </div>
-
             </div>
         </div>
     </div>
 
-</body>
+    <script>
+        function handleLogin() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
 
+            if (username === "admin" && password === "admin123") {
+                window.location.href = "dashboard.html";
+            } else {
+                alert("Invalid credentials!\n\nUse:\nUsername: admin\nPassword: admin123");
+            }
+        }
+    </script>
+</body>
 </html>
