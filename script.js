@@ -99,7 +99,9 @@ function renderIssues(issues) {
                     <div class="flex gap-2 mt-4 flex-wrap">
                         ${(issue.labels || ['BUG']).map(label => getLabelHTML(label)).join('')}
                     </div>
-                    <div class="pt-4 mt-4 border-t border-[#e4e4e7] text-gray-400 text-xs">
+                    
+                    <!-- Footer - Full width border (FIXED) -->
+                    <div class="mt-4 -mx-5 pt-4 border-t border-[#e4e4e7] px-5 text-gray-400 text-xs">
                         #${issue.id || issue.number} by ${issue.author || issue.user?.login || 'Unknown'}<br>
                         ${issue.createdAt
                 ? new Date(issue.createdAt).toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' })
